@@ -1,12 +1,16 @@
 package com.rogerloria.prueba_tecnica_backend.controller;
 
+import com.rogerloria.prueba_tecnica_backend.model.ErrorResponse;
 import com.rogerloria.prueba_tecnica_backend.model.Usuario;
 import com.rogerloria.prueba_tecnica_backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -40,8 +44,14 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarUsuario(@PathVariable String id)  {
-        usuarioService.eliminarUsuario(id);
-        return ResponseEntity.noContent().build();
+    public HttpEntity<?> eliminarUsuario(@PathVariable String id)  {
+        try {
+            usuarioService.eliminarUsuario(id);
+            return ResponseEntity.ok("Usuario eliminado correctamente");
+        } catch (NoSuchElementException ex) {
+            // Crear un objeto ErrorResponse
+            ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 }

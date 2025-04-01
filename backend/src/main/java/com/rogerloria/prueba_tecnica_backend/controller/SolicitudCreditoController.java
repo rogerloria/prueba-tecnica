@@ -1,8 +1,10 @@
 package com.rogerloria.prueba_tecnica_backend.controller;
 
+import com.rogerloria.prueba_tecnica_backend.model.ErrorResponse;
 import com.rogerloria.prueba_tecnica_backend.model.SolicitudCredito;
 import com.rogerloria.prueba_tecnica_backend.service.SolicitudCreditoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +40,13 @@ public class SolicitudCreditoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarSolicitud(@PathVariable String id) {
-        solicitudCreditoService.eliminarSolicitud(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> eliminarSolicitud(@PathVariable String id) {
+        try {
+            solicitudCreditoService.eliminarSolicitud(id);
+            return ResponseEntity.ok("Solicitud de crédito eliminada correctamente");
+        } catch (RuntimeException ex) {
+            ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 }
