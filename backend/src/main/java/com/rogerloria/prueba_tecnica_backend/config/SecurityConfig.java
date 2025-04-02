@@ -7,19 +7,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // Nueva forma recomendada
+                .csrf(AbstractHttpConfigurer::disable) // Deshabilitar CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/usuarios/**").authenticated()
+//                        .requestMatchers("/usuarios/**", "/solicitudes/**").permitAll()
                         .anyRequest().permitAll()
                 )
-                .addFilterBefore((Filter) new ApiKeyFilter(), FilterSecurityInterceptor.class); // Agrega el filtro personalizado
+                .addFilterBefore(new ApiKeyFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
