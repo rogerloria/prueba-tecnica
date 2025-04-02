@@ -13,6 +13,7 @@ const MainLayout = ({ children }) => {
                 </button>
                 <ul>
                     <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Registar Usuario</a></li>
                     <li><a href="#">Solicitar Crédito</a></li>
                 </ul>
             </nav>
