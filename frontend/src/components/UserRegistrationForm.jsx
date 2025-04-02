@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../styles/CreditRequestForm.css"; // Estilos específicos del formulario
-import { UsuarioService } from "../services/UsuarioService";
+import "../styles/UserRegistrationForm.css"; // Estilos específicos del formulario
+import UsuarioService from "../services/UsuarioService";
 
 const UserRegistrationForm = () => {
     const [formData, setFormData] = useState({
@@ -43,14 +43,24 @@ const UserRegistrationForm = () => {
     };
 
     const handleSubmit = async (e) => {
+        console.log("handleSubmit llamado");
         e.preventDefault();
+        console.log("Formulario enviado");  // Verificar si la función es llamada
+    
         const validationErrors = validateForm();
+        console.log("Errores de validación:", validationErrors);  // Verificar si los errores de validación están correctos
+    
         if (Object.keys(validationErrors).length === 0) {
             try {
+                console.log("Datos del formulario que se enviarán:", formData);  // Verificar los datos del formulario antes de enviarlos
+    
                 // Llamamos al servicio para registrar el usuario
                 const response = await UsuarioService.registrarUsuario(formData);
+                console.log("Respuesta del servidor:", response);  // Verificar lo que devuelve el servidor
+    
                 if (response.status === 200) {
                     setMessage("Usuario registrado con éxito");
+                    console.log("Usuario registrado con éxito");  // Confirmación de éxito
                     // Limpiar el formulario después del registro
                     setFormData({
                         nombres: "",
@@ -66,15 +76,18 @@ const UserRegistrationForm = () => {
                     });
                 } else {
                     setMessage("Error al registrar el usuario. Intenta nuevamente.");
+                    console.log("Error al registrar el usuario. Código de estado:", response.status);  // Verificar si hay error con el código de estado
                 }
             } catch (error) {
                 setMessage("Hubo un error con el servidor. Intenta más tarde.");
+                console.error("Error en la solicitud al servidor:", error);  // Verificar error de la solicitud
             }
         } else {
             setErrors(validationErrors);
+            console.log("Errores de validación detectados:", validationErrors);  // Verificar si se están mostrando correctamente los errores de validación
         }
     };
-
+    
     return (
         <form onSubmit={handleSubmit} className="credit-request-form">
             <h2>Registro de Usuarios</h2>

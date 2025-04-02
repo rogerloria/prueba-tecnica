@@ -1,16 +1,21 @@
-import axios from "axios";
+// UsuarioService.js
+import AuthService from './AuthService';
+import axios from 'axios';
 
-// Definir la URL del backend
-const API_URL = "http://localhost:8080/usuarios"; // La URL para el registro de usuarios
+const API_URL = "http://localhost:8080/usuarios";
 
-// Crear el servicio
 const UsuarioService = {
-  // Método para registrar usuario
-  async registrarUsuario(usuarioData) {
+  registrarUsuario: async (usuarioData) => {
     try {
-      const response = await axios.post(API_URL, usuarioData);
-      return response.data; // Retorna la respuesta del servidor (puede ser un mensaje de éxito)
+      // Verificar los encabezados antes de la solicitud
+      const headers = AuthService.getAuthHeaders();
+      console.log('Encabezados enviados:', headers);  // Log de los encabezados
+
+      const response = await axios.post(API_URL, usuarioData, { headers });
+      console.log('Respuesta del servidor:', response.data);  // Log de la respuesta del servidor
+      return response.data;
     } catch (error) {
+      console.error("Error al registrar usuario:", error);
       throw new Error("Hubo un error al registrar el usuario");
     }
   },

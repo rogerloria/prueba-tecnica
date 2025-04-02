@@ -1,0 +1,31 @@
+/* HomePage.css */
+.homepage-container {
+    background-color: #f4f4f9; /* Fondo suave */
+    padding: 30px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .homepage-container h2 {
+    color: #2c3e50;
+    font-size: 2rem; /* Título más grande */
+    margin-bottom: 20px;
+  }
+  
+  .homepage-container p {
+    color: #34495e;
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+  
+  .homepage-container .welcome-message {
+    margin-top: 20px;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #27ae60; /* Un verde que resalta */
+  }
+  

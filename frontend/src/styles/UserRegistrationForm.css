@@ -22,6 +22,7 @@ input[type="text"],
 input[type="email"],
 input[type="number"],
 input[type="tel"],
+input[type="date"]
 textarea {
     width: 100%;
     padding: 10px; /* Reducir el padding */
@@ -31,6 +32,7 @@ textarea {
     background-color: #f9f9f9;
     font-size: 14px; /* Reducir el tamaño de fuente */
     box-sizing: border-box; /* Asegura que el padding y el borde se incluyan en el ancho total */
+    color: #2c3e50;
 }
 
 /* Estilos para los labels */
@@ -55,4 +57,9 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+
+.form-button-container {
+    margin-top: 15px; /* Ajusta este valor según sea necesario */
+    text-align: center;
 }
